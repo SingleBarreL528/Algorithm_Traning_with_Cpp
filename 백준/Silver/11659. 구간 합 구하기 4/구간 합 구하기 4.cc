@@ -11,13 +11,12 @@ int main()
 
     int n, m;
     cin >> n >> m;
-    int arr[n + 1] = {0};
     int psum[n + 1] = {0};
 
     for (int idx = 1; idx <= n; ++idx)
     {
-        cin >> arr[idx];
-        psum[idx] = psum[idx - 1] + arr[idx];
+        cin >> psum[idx];
+        psum[idx] += psum[idx - 1];
     }
 
     while (m--)
@@ -25,8 +24,7 @@ int main()
         int i, j;
         cin >> i >> j;
 
-        int sum = psum[j] - psum[i - 1];
-        cout << sum << "\n";
+        cout << (psum[j] - psum[i - 1]) << "\n";
     }
 
     return 0;
