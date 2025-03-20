@@ -20,22 +20,40 @@ int main()
     set<string> user_set;
 
     cin >> n;
+
+    // code 1
+    // while (n--)
+    // {
+    //     cin >> user_name;
+
+    //     if (user_name == "ENTER")
+    //     {
+    //         user_set.clear();
+    //         continue;
+    //     }
+
+    //     if (user_set.find(user_name) == user_set.end())
+    //     {
+    //         ++cnt;
+    //         user_set.insert(user_name);
+    //     }
+    // }
+
+    // code 2
     while (n--)
     {
         cin >> user_name;
 
         if (user_name == "ENTER")
         {
+            cnt += user_set.size();
             user_set.clear();
             continue;
         }
 
-        if (user_set.find(user_name) == user_set.end())
-        {
-            ++cnt;
-            user_set.insert(user_name);
-        }
+        user_set.insert(user_name);
     }
+    cnt += user_set.size();
 
     cout << cnt;
 
