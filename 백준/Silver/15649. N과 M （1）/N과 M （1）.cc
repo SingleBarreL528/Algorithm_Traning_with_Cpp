@@ -1,22 +1,12 @@
 #include <algorithm>
 #include <iostream>
-#include <string>
 #include <vector>
 
 // cin.tie(NULL)과 sync_with_stdio(false)를 둘 다 적용해 주고, endl 대신 개행문자(\n)
 
 using namespace std;
 
-void print(vector<int> set)
-{
-    for (auto iter = set.begin(); iter != set.end(); ++iter)
-    {
-        cout << *iter << " ";
-    }
-    cout << "\n";
-}
-
-void backtrack(vector<int> &num, vector<int> &set, int &m)
+void backtrack(vector<int> &num, vector<int> &perm, int m)
 {
     for (int i = 0; i < num.size(); ++i)
     {
@@ -27,16 +17,15 @@ void backtrack(vector<int> &num, vector<int> &set, int &m)
         else
         {
             num.at(i) = 1;
-            set.push_back(i + 1);
-            m -= 1;
+            perm.push_back(i + 1);
 
-            if (m != 0)
+            if (perm.size() != m)
             {
-                backtrack(num, set, m);
+                backtrack(num, perm, m);
             }
             else
             {
-                for (auto iter = set.begin(); iter != set.end(); ++iter)
+                for (auto iter = perm.begin(); iter != perm.end(); ++iter)
                 {
                     cout << *iter << " ";
                 }
@@ -44,8 +33,7 @@ void backtrack(vector<int> &num, vector<int> &set, int &m)
             }
 
             num.at(i) = 0;
-            set.pop_back();
-            m += 1;
+            perm.pop_back();
         }
     }
 }
@@ -60,6 +48,9 @@ int main()
     cin >> n >> m;
 
     vector<int> num(n, 0);
-    vector<int> set;
-    backtrack(num, set, m);
+    vector<int> perm;
+
+    backtrack(num, perm, m);
+
+    return 0;
 }
