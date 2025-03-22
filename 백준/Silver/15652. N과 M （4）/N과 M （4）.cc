@@ -4,38 +4,23 @@
 
 using namespace std;
 
-bool comp(vector<int> set)
+void backtrack(vector<int> set, int m, int min, int max)
 {
-    for (int i = 0; i < (set.size() - 1); ++i)
-    {
-        if (set.at(i) > set.at(i + 1))
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
-void backtrack(vector<int> set, int n, int m)
-{
-    for (int i = 1; i <= n; ++i)
+    for (int i = min; i <= max; ++i)
     {
         set.push_back(i);
 
         if (set.size() != m)
         {
-            backtrack(set, n, m);
+            backtrack(set, m, i, max);
         }
         else
         {
-            if (comp(set) == true)
+            for (auto iter = set.begin(); iter != set.end(); ++iter)
             {
-                for (auto iter = set.begin(); iter != set.end(); ++iter)
-                {
-                    cout << *iter << " ";
-                }
-                cout << "\n";
+                cout << *iter << " ";
             }
+            cout << "\n";
         }
 
         set.pop_back();
@@ -53,7 +38,7 @@ int main()
 
     vector<int> set;
 
-    backtrack(set, n, m);
+    backtrack(set, m, 1, n);
 
     return 0;
 }
