@@ -4,7 +4,7 @@
 using namespace std;
 
 int n;
-int tri[501][501] = {0};
+int tri;
 int dp[501][501] = {0};
 int max_val = INT_MIN;
 
@@ -24,8 +24,8 @@ int main(void)
     {
         for (int col = 1; col <= row; ++col)
         {
-            cin >> tri[row][col];
-            dp[row][col] = comp(tri[row][col] + dp[row - 1][col - 1], tri[row][col] + dp[row - 1][col]);
+            cin >> tri;
+            dp[row][col] = comp(tri + dp[row - 1][col - 1], tri + dp[row - 1][col]);
             if (dp[row][col] > max_val)
             {
                 max_val = dp[row][col];
