@@ -6,7 +6,6 @@
 using namespace std;
 
 int n;
-array<int, 21> a = {0};
 
 int fibo(int num)
 {
