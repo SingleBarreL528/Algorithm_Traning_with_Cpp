@@ -8,7 +8,7 @@ using namespace std;
 string question;
 int idx;
 
-int return_num()
+int extract_num(int &idx)
 {
     int num = 0;
     while ((isdigit(question[idx])) && (idx <= question.length() - 1))
@@ -21,28 +21,25 @@ int return_num()
     return num;
 }
 
-int calc()
+int calc(int &idx)
 {
-    int num = 0;
+    int num = extract_num(idx);
 
-    num = return_num();
     while (idx <= question.length() - 1)
     {
         if (question[idx] == '-')
         {
-            ++idx;
-            int temp = return_num();
+            int num_temp = extract_num(++idx);
+
             while (question[idx] == '+')
             {
-                ++idx;
-                temp += return_num();
+                num_temp += extract_num(++idx);
             }
-            num -= temp;
+            num -= num_temp;
         }
-        else
+        else if (question[idx] == '+')
         {
-            ++idx;
-            num += return_num();
+            num += extract_num(++idx);
         }
     }
 
@@ -58,7 +55,7 @@ int main()
     cin >> question;
     idx = 0;
 
-    cout << calc();
+    cout << calc(idx);
 
     return 0;
 }
