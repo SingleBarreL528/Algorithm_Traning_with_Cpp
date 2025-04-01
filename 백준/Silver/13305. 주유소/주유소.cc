@@ -7,7 +7,8 @@ using namespace std;
 
 int n;
 int temp;
-int total_cost = 0;
+int visited_cost = 1000000001;
+long long total_cost = 0;
 
 int road_end_idx;
 vector<int>::iterator gas_end_iter;
@@ -17,19 +18,15 @@ vector<int> gas;
 
 void find_cost()
 {
-    while (road_end_idx != 0)
+    total_cost += (long long)gas[0] * road[0];
+    visited_cost = gas[0];
+    for (int i = 1; i < n - 1; ++i)
     {
-        auto gas_least_iter = min_element(gas.begin(), gas_end_iter);
-        int gas_cost = *gas_least_iter;
-        int road_start_idx = distance(gas.begin(), gas_least_iter);
-
-        for (int i = road_start_idx; i < road_end_idx; ++i)
+        if (gas[i] < visited_cost)
         {
-            total_cost += gas_cost * road[i];
+            visited_cost = gas[i];
         }
-
-        road_end_idx = road_start_idx;
-        gas_end_iter = gas_least_iter;
+        total_cost += (long long)visited_cost * road[i];
     }
 }
 
@@ -53,6 +50,10 @@ int main()
 
     road_end_idx = n - 1;
     gas_end_iter = gas.end();
+
+    // auto iter = min_element(gas.begin(), gas.end());
+    // cout << *iter << endl;
+    // cout << distance(gas.begin(), iter) << endl;
 
     find_cost();
     cout << total_cost;
