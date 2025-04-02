@@ -5,20 +5,17 @@
 
 using namespace std;
 
-int N;
-long long B;
-int A[5][5] = {0};
-int A_1[5][5] = {0};
+typedef array<array<int, 5>, 5> matrix_t;
 
-void mul_matrix(int a[5][5], int b[5][5])
+void mul_matrix(matrix_t &a, matrix_t &b, int n)
 {
-    int temp[5][5] = {0};
+    matrix_t temp = {0};
 
-    for (int k = 0; k < N; ++k)
+    for (int k = 0; k < n; ++k)
     {
-        for (int i = 0; i < N; ++i)
+        for (int i = 0; i < n; ++i)
         {
-            for (int j = 0; j < N; ++j)
+            for (int j = 0; j < n; ++j)
             {
                 temp[i][k] += a[i][j] * b[j][k];
             }
@@ -26,16 +23,16 @@ void mul_matrix(int a[5][5], int b[5][5])
         }
     }
 
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < n; ++i)
     {
-        for (int j = 0; j < N; ++j)
+        for (int j = 0; j < n; ++j)
         {
             a[i][j] = temp[i][j];
         }
     }
 }
 
-void pow_matrix(int a[5][5], long long exp, int n)
+void pow_matrix(matrix_t &a, matrix_t &a_1, long long exp, int n)
 {
     if (exp == 1)
     {
@@ -43,18 +40,26 @@ void pow_matrix(int a[5][5], long long exp, int n)
     }
     else
     {
-        pow_matrix(a, exp / 2, n);
+        pow_matrix(a, a_1, exp / 2, n);
 
-        mul_matrix(a, a);
+        mul_matrix(a, a, n);
         if (exp % 2 == 1)
         {
-            mul_matrix(a, A_1);
+            mul_matrix(a, a_1, n);
         }
     }
 }
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
+    int N;
+    long long B;
+    matrix_t A = {0};
+    matrix_t A_1 = {0};
 
     cin >> N >> B;
     for (int i = 0; i < N; ++i)
@@ -67,7 +72,7 @@ int main()
         }
     }
 
-    pow_matrix(A, B, N);
+    pow_matrix(A, A_1, B, N);
 
     for (int i = 0; i < N; ++i)
     {
