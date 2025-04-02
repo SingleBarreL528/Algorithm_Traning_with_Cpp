@@ -5,7 +5,8 @@ using namespace std;
 
 // (PrefixSum[j] - PrefixSum[i]) % MOD = 0
 // (PrefixSum[j] % MOD - PrefixSum[i] % MOD) % MOD = 0
-// PrefixSum[j] % MOD = PrefixSum[i] % MOD
+// -> PrefixSum[j] % MOD = PrefixSum[i] % MOD (i > 0)
+// -> PrefixSum[j] % MOD = 0 (i = 0 -> PrefixSum[0] = 0)
 
 int main()
 {
@@ -23,10 +24,6 @@ int main()
     {
         cin >> psum[idx];
         psum[idx] = (psum[idx] % m + psum[idx - 1]) % m;
-        if (psum[idx] == 0)
-        {
-            ++result;
-        }
         ++cnt_rem[psum[idx]];
     }
 
@@ -34,6 +31,7 @@ int main()
     {
         result += (cnt_rem[idx] * (cnt_rem[idx] - 1)) / 2;
     }
+    result += cnt_rem[0];
 
     cout << result;
 
