@@ -1,12 +1,9 @@
 #include <algorithm>
+#include <array>
 #include <iostream>
 #include <vector>
 
 using namespace std;
-
-int n;
-int val[1001] = {0};
-int cnt[1001] = {0};
 
 int main()
 {
@@ -14,22 +11,26 @@ int main()
     cin.tie(NULL);
     cout.tie(NULL);
 
-    cin >> n;
+    int n;
+    int inp;
+    array<int, 1001> arr;
+    array<int, 1001> dp = {};
 
-    for (int i = 1; i <= n; ++i)
+    cin >> n;
+    for (int i = 0; i < n; ++i)
     {
-        cin >> val[i];
-        for (int j = i - 1; j >= 1; --j)
+        cin >> arr[i];
+        for (int j = 0; j < i; ++j)
         {
-            if (val[i] > val[j])
+            if (arr[j] < arr[i])
             {
-                cnt[i] = max(cnt[i], cnt[j]);
+                dp[i] = max(dp[j], dp[i]);
             }
         }
-        cnt[i]++;
+        ++dp[i];
     }
 
-    cout << *max_element(cnt, cnt + n + 1);
+    cout << *max_element(dp.begin(), dp.end());
 
     return 0;
 }
