@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -33,7 +33,7 @@ int main()
 
     int n, m;
     string word;
-    map<string, int> word_list_map;
+    unordered_map<string, int> word_list_map;
 
     cin >> n >> m;
     for (int i = 0; i < n; ++i)
