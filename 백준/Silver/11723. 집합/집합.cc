@@ -5,37 +5,31 @@
 
 using namespace std;
 
-void operate_command(string &command, int &operand, vector<bool> &v)
+void operate_command(string &command, int &operand, int &bit_mask)
 {
     if (command == "add")
     {
-        v[operand] = 1;
+        bit_mask |= (1 << operand);
     }
     else if (command == "remove")
     {
-        v[operand] = 0;
+        bit_mask &= ~(1 << operand);
     }
     else if (command == "check")
     {
-        cout << v[operand] << "\n";
+        cout << ((bit_mask & (1 << operand)) ? 1 : 0) << "\n";
     }
     else if (command == "toggle")
     {
-        v[operand] = 1 - v[operand];
+        bit_mask ^= (1 << operand);
     }
     else if (command == "all")
     {
-        for (int i = 1; i <= 20; ++i)
-        {
-            v[i] = 1;
-        }
+        bit_mask = (1 << 21) - 1;
     }
     else if (command == "empty")
     {
-        for (int i = 1; i <= 20; ++i)
-        {
-            v[i] = 0;
-        }
+        bit_mask = 0;
     }
 }
 
@@ -48,7 +42,7 @@ int main()
     int m;
     int operand;
     string command;
-    vector<bool> v(21);
+    int bit_mask = 0;
 
     cin >> m;
     for (int i = 0; i < m; ++i)
@@ -58,7 +52,7 @@ int main()
         {
             cin >> operand;
         }
-        operate_command(command, operand, v);
+        operate_command(command, operand, bit_mask);
     }
 
     return 0;
